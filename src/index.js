@@ -3,11 +3,31 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { createBrowserHistory } from "history";
+import { Router } from "react-router-dom";
+import { createTheme, ThemeProvider } from "@material-ui/core";
+import { StateProvider } from "./StateProvider";
+import reducer, { initialState } from "./Reducer";
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#00528B",
+      light: "#00C437",
+    },
+    
+  },
+});
+const history = createBrowserHistory();
 
 ReactDOM.render(
-  <React.StrictMode>
+    <StateProvider initialState={initialState} reducer={reducer}>
+  <Router history={history}>
+  <ThemeProvider theme={theme}>
     <App />
-  </React.StrictMode>,
+  </ThemeProvider>
+  </Router>
+   </StateProvider>,
   document.getElementById('root')
 );
 

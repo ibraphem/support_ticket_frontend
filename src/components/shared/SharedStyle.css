@@ -1,0 +1,19 @@
+.ticket_card_optionLineOne {
+  font-size: 20px;
+  font-weight: bold;
+  color: #00528b;
+}
+
+.ticket_card_optionLineTwo {
+  font-size: 13px;
+  padding: 2px 0px 0px 0px;
+  color: rgba(1, 50, 85, 0.5);
+}
+
+.ticket_card_option {
+  display: flex;
+  padding: 5px 50px;
+  flex-direction: column;
+  margin-left: 10px;
+  margin-right: 10px;
+}
