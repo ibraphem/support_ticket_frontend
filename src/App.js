@@ -101,7 +101,7 @@ const cookie = new Cookie();
   return (
     <>
       <Header />
-      <Title />
+
       <Switch>
       <Route
         exact
