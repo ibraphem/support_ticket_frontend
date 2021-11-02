@@ -23,7 +23,7 @@ const App = () => {
   const [alertMessage, setAlertMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const [{}, dispatch] = useStateValue();
+  const [{ role }, dispatch] = useStateValue();
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -153,7 +153,6 @@ const App = () => {
               iserror={iserror}
               alertMessage={alertMessage}
               isLoading={isLoading}
-              alertMessage={alertMessage}
               name={name}
               handleNameChange={handleNameChange}
               close={close}
@@ -173,13 +172,13 @@ const App = () => {
               email={email}
               password={password}
               iserror={iserror}
-              alertMessage={alertMessage}
               handleRememberMe={handleRememberMe}
               isRemember={isRemember}
               isLoading={isLoading}
               alertMessage={alertMessage}
               close={close}
               auth="login"
+              role={role}
             />
           )}
         />

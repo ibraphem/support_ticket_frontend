@@ -33,13 +33,14 @@ const Login = ({
 }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [{ token, user_id }] = useStateValue();
+
   const history = useHistory();
 
   useEffect(() => {
     if (token && user_id) {
       history.push("/dashboard");
     }
-  }, [token, user_id]);
+  }, [token, user_id, history]);
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -112,7 +113,6 @@ const Login = ({
             InputLabelProps={{ shrink: true }}
             style={inputStyle}
             value={password}
-            InputLabelProps={{ shrink: true }}
             InputProps={{
               endAdornment: (
                 <IconButton
