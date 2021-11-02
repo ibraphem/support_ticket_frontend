@@ -1,23 +1,18 @@
-import React, {useState} from "react";
-import {
-  Grid,
-  Paper,
-  TextField,
-  Button,
-  Typography,
-  Link,
-} from "@material-ui/core";
+import React, { useState, useEffect } from "react";
+import { Grid, Paper, TextField, Typography } from "@material-ui/core";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Toolbar from "@material-ui/core/Toolbar";
 import Box from "@material-ui/core/Box";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import FormControl from "@material-ui/core/FormControl";
 import IconButton from "@material-ui/core/IconButton";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
-import Input from "@material-ui/core/Input";
-import InputLabel from "@material-ui/core/InputLabel";
+import { useStateValue } from "../../StateProvider";
+import { useHistory } from "react-router-dom";
+import SuccessAlerts from "../alerts/SuccessAlerts";
+import ErrorAlerts from "../alerts/ErrorAlerts";
+import SubmitButton from "../shared/SubmitButton";
+import { Link } from "react-router-dom";
 
 const Login = ({
   email,
@@ -26,102 +21,153 @@ const Login = ({
   handlePasswordChange,
   handleRememberMe,
   login,
-  alertMessage,
-  iserror,
-  handleChecked,
+  register,
   isRemember,
+  iserror,
+  isLoading,
+  alertMessage,
+  name,
+  handleNameChange,
+  close,
+  auth,
 }) => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [{ token, user_id }] = useStateValue();
+  const history = useHistory();
 
-const [showPassword, setShowPassword] = useState(false)
+  useEffect(() => {
+    if (token && user_id) {
+      history.push("/dashboard");
+    }
+  }, [token, user_id]);
 
   const handleClickShowPassword = () => {
-    setShowPassword(!showPassword)
+    setShowPassword(!showPassword);
   };
-
 
   const paperStyle = {
     padding: 20,
-    height: "380px",
-    width: "420px",
+    width: "400px",
     margin: "0px auto",
     borderRadius: "10px",
   };
   const inputStyle = {
     padding: "10px 0px",
   };
-    const checkStyle ={
+  const checkStyle = {
     display: "flex",
-      flexGrow: 1,
-      marginaleft: 0
-     }
-  const btnstyle = { margin: "15px 0" };
+    flexGrow: 1,
+    marginaleft: 0,
+  };
+
+  const linkStyle = { textDecoration: "none", color: "#00528b" };
+
+  const subtitleStyle = {
+    fontWeight: "bolder",
+  };
+
   return (
     <Grid>
       <Paper elevation={10} style={paperStyle}>
+        <div style={subtitleStyle}>
+          {iserror ? (
+            <ErrorAlerts message={alertMessage} close={close} />
+          ) : null}
+          {iserror === false ? (
+            <SuccessAlerts message={alertMessage} close={close} />
+          ) : null}
+        </div>
         <Grid align="center">
-          <h2>Sign In</h2>
+          <h2>{auth === "register" ? "Sign Up" : "Sign In"}</h2>
         </Grid>
-        <form onSubmit={login}>
-        <TextField
-        type="email"
-        onChange={handleEmailChange}
-        value={email}
-          label="Enter Email Address"
-          fullWidth
-          required
-          InputLabelProps={{ shrink: true }}
-          style={inputStyle}
-        />
-      
+        <form onSubmit={auth === "login" ? login : register}>
+          {auth === "register" ? (
+            <TextField
+              type="text"
+              onChange={handleNameChange}
+              value={name}
+              label="Enter your name"
+              fullWidth
+              required
+              InputLabelProps={{ shrink: true }}
+              style={inputStyle}
+            />
+          ) : null}
           <TextField
-         type={showPassword ? "text" : "password"}
-          onChange={handlePasswordChange}
-           label="Enter Password"
-          fullWidth
-          required
-          InputLabelProps={{ shrink: true }}
-          style={inputStyle}
-          value={password}
-          InputLabelProps={{ shrink: true }}
-          InputProps={{
-               endAdornment:
-                 <IconButton
+            type="email"
+            onChange={handleEmailChange}
+            value={email}
+            label="Enter Email Address"
+            fullWidth
+            required
+            InputLabelProps={{ shrink: true }}
+            style={inputStyle}
+          />
+          <TextField
+            type={showPassword ? "text" : "password"}
+            onChange={handlePasswordChange}
+            label="Enter Password"
+            fullWidth
+            required
+            InputLabelProps={{ shrink: true }}
+            style={inputStyle}
+            value={password}
+            InputLabelProps={{ shrink: true }}
+            InputProps={{
+              endAdornment: (
+                <IconButton
                   aria-label="toggle password visibility"
                   onClick={handleClickShowPassword}
                 >
                   {showPassword ? <Visibility /> : <VisibilityOff />}
-                </IconButton>,
-               }}
+                </IconButton>
+              ),
+            }}
           />
 
-           <Toolbar disableGutters={true}>
-                          <Box style={checkStyle}> 
-                                    <FormControlLabel
-                                      control={<Checkbox name="checkedB" color="primary" />}
-                                      label="Remember me"
-                                      checked={isRemember}
-                                      onChange={handleRememberMe}
-                                    />
-                          </Box>
-                            <Typography style={{ float: "right" }}>
-                              <Link href="#">Forgot password ?</Link>
-                          </Typography>
-                       </Toolbar>
-  
-    
-        <Button
-          type="submit"
-          color="primary"
-          variant="contained"
-          style={btnstyle}
-          fullWidth
-        >
-          Sign in
-        </Button>{" "}
+          {auth === "login" ? (
+            <Toolbar disableGutters={true}>
+              <Box style={checkStyle}>
+                <FormControlLabel
+                  control={<Checkbox name="checkedB" color="primary" />}
+                  label="Remember me"
+                  checked={isRemember}
+                  onChange={handleRememberMe}
+                />
+              </Box>
+              <Typography style={{ float: "right" }}>
+                <Link to="#" style={linkStyle}>
+                  Forgot password ?
+                </Link>
+              </Typography>
+            </Toolbar>
+          ) : null}
+
+          <SubmitButton
+            color="primary"
+            label={auth === "login" ? "Sign In" : "Sign Up"}
+            type="submit"
+            isLoading={isLoading}
+            width={true}
+          />
         </form>
-        <Typography align="center">
-          Don't have an account?<Link href="#"> Sign Up Instead</Link>
-        </Typography>
+        {auth === "login" ? (
+          <Typography align="center">
+            Don't have an account?
+            <Link to="/register" style={linkStyle}>
+              {" "}
+              Sign Up Instead
+            </Link>
+          </Typography>
+        ) : (
+          <Typography align="center">
+            Have an account already ?
+            <Link to="/login" style={linkStyle}>
+              {" "}
+              Sign In Instead
+            </Link>
+          </Typography>
+        )}
       </Paper>
     </Grid>
   );

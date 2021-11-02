@@ -3,7 +3,7 @@ import { Route, Redirect } from "react-router-dom";
 import Cookie from "universal-cookie";
 
 const ProtectedRoute = ({ component: Component, ...rest }) => {
-  const cookie = new Cookie()
+  const cookie = new Cookie();
   const token = cookie.get("access_token");
 
   return (

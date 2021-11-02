@@ -1,34 +1,54 @@
-import React from "react";
+import React, { useState } from "react";
 import Typography from "@material-ui/core/Typography";
-import Breadcrumbs from "@material-ui/core/Breadcrumbs";
-import Link from "@material-ui/core/Link";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
+import { Grid } from "@material-ui/core";
+import { useStateValue } from "../../StateProvider";
+import { URL } from "../../components/Config";
+import axios from "axios";
 
-const Title = () => {
-  const titleStyle = {
-    margin: "10px 20px",
-    paddingLeft: "50px",
-    minHeight: "80px",
+const Title = ({ heading, ticketID, status, rerender, statusValue }) => {
+  const [{ role }] = useStateValue();
+  const [isClosed, setIsClosed] = useState(
+    statusValue === "Closed" ? true : false
+  );
+
+  const handleChangeStatus = (event) => {
+    axios
+      .get(`${URL}/status/${ticketID}/${event.target.value}`)
+      .then((response) => {
+        rerender(response.data.ticket[0]);
+        setIsClosed(!isClosed);
+      });
   };
 
   return (
-    <div style={titleStyle}>
-      <div>
+    <Grid container style={{ padding: "10px 80px" }}>
+      <Grid item xs={8} sm={10}>
         <Typography
           color="primary"
-          style={{ fontWeight: "bolder", fontSize: "28px" }}
+          style={{ fontWeight: "bolder", fontSize: "25px" }}
         >
-          This is Title
+          {heading}
         </Typography>
-      </div>
-      <div>
-        <Breadcrumbs aria-label="breadcrumb">
-          <Link color="inherit" href="/">
-            Material-UI
-          </Link>
-          <Typography color="textPrimary">Breadcrumb</Typography>
-        </Breadcrumbs>
-      </div>
-    </div>
+      </Grid>
+      {role === "Agent" && ticketID ? (
+        <Grid item xs={4} sm={2} style={{ float: "right" }}>
+          <FormControlLabel
+            value={statusValue}
+            control={
+              <Checkbox
+                color="primary"
+                checked={isClosed}
+                onChange={handleChangeStatus}
+              />
+            }
+            label="Marked as Closed"
+            labelPlacement="start"
+          />
+        </Grid>
+      ) : null}
+    </Grid>
   );
 };
 

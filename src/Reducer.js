@@ -6,11 +6,14 @@ import Cookie from "universal-cookie";
   const role = cookie.get("role");
   const user_id = cookie.get("user_id");
 
+
+
+
 export const initialState = {
   token: access_token,
   user: name,
   role: role,
-  user_id: user_id
+ user_id: user_id
 };
 
 const reducer = (state, action) => {
@@ -21,7 +24,7 @@ const reducer = (state, action) => {
                 token: null,
                 user: null ,
                 role: null,
-                user_id: null
+              user_id: null
             }
          case "SIGN_USER_IN":
             return {

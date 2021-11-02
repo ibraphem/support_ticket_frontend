@@ -1,12 +1,10 @@
-import React, {useState} from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import { TextField } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
-import CancelIcon from '@material-ui/icons/Cancel';
 
 const useStyles = makeStyles((theme) => ({
-
   root: {
     "& > *": {
       margin: theme.spacing(1),
@@ -17,51 +15,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-  const AttachFile = ({allUploadedFiles, fileToUploads, handleFileUpload, handleAddUpload, handleRemoveUpload}) => {
+const AttachFile = ({ fileToUploads, handleFileUpload, handleAddUpload }) => {
   const classes = useStyles();
 
   return (
-    <>
-    {allUploadedFiles?.length > 0 ? (
-        <>
-        {allUploadedFiles.map((allUploadedFile, index)=>(
-          <div key={index} style={{marginBottom:"10px"}}>
-               <TextField
-          variant="outlined"
-          size="small"
-          InputProps={{readOnly:true}}
-          style={{  width: "70%", marginLeft:"115px"}}
-          value={allUploadedFile.name}
-        />
-        <Button
-          variant="contained"
-          color="secondary"
-          style={{float: "right" }}
-          startIcon={<CancelIcon />}
-          onClick={handleRemoveUpload}
-         
-        >
-          {" "}
-          Remove
-        </Button>
-          </div>
-        ))}
-
-        </>
-    ):null}
-    <>
     <div className={classes.root}>
       <input
+        accept="image/*,application/pdf,.doc,.docx,.zip"
         className={classes.input}
         id="contained-button-file"
         onChange={handleFileUpload}
         type="file"
-        name="file_upload"        
+        readOnly
       />
       <label htmlFor="contained-button-file">
         <Button
           variant="contained"
           component="span"
+          type="submit"
           style={{
             background: "transparent",
             padding: "7px",
@@ -72,27 +43,26 @@ const useStyles = makeStyles((theme) => ({
         >
           Select file
         </Button>
+
         <TextField
           variant="outlined"
           size="small"
           style={{ borderLeftWidth: 0, width: "70%" }}
-          value={fileToUploads?.name}
+          value={fileToUploads?.name || ""}
         />
         <Button
           variant="contained"
           color="primary"
-          type="submit"
-          style={{float: "right" }}
+          style={{ float: "right" }}
           startIcon={<AddIcon />}
           onClick={handleAddUpload}
+          disabled={fileToUploads?.name ? false : true}
         >
           {" "}
           Add more
         </Button>
       </label>
     </div>
-    </>
-    </>
   );
 };
 
