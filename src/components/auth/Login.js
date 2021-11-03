@@ -13,6 +13,8 @@ import SuccessAlerts from "../alerts/SuccessAlerts";
 import ErrorAlerts from "../alerts/ErrorAlerts";
 import SubmitButton from "../shared/SubmitButton";
 import { Link } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
+import { Card } from "@material-ui/core";
 
 const Login = ({
   email,
@@ -48,8 +50,7 @@ const Login = ({
 
   const paperStyle = {
     padding: 20,
-    width: "400px",
-    margin: "0px auto",
+    margin: "20px 20px",
     borderRadius: "10px",
   };
   const inputStyle = {
@@ -68,107 +69,89 @@ const Login = ({
   };
 
   return (
-    <Grid>
-      <Paper elevation={10} style={paperStyle}>
-        <div style={subtitleStyle}>
-          {iserror ? (
-            <ErrorAlerts message={alertMessage} close={close} />
-          ) : null}
-          {iserror === false ? (
-            <SuccessAlerts message={alertMessage} close={close} />
-          ) : null}
-        </div>
-        <Grid align="center">
-          <h2>{auth === "register" ? "Sign Up" : "Sign In"}</h2>
-        </Grid>
-        <form onSubmit={auth === "login" ? login : register}>
-          {auth === "register" ? (
+    <Grid
+      container
+      align="center"
+      justify="center"
+      alignItems="center"
+      direction="column"
+    >
+      <Grid item xs={12} sm={3}></Grid>
+      <Grid item xs={12} sm={5} style={{ marginTop: "70px" }}>
+        <Paper elevation={10} style={paperStyle}>
+          <form onSubmit={auth === "login" ? login : register}>
+            {auth === "register" ? (
+              <TextField
+                type="text"
+                onChange={handleNameChange}
+                value={name}
+                label="Enter your name"
+                fullWidth
+                required
+                InputLabelProps={{ shrink: true }}
+                style={inputStyle}
+              />
+            ) : null}
             <TextField
-              type="text"
-              onChange={handleNameChange}
-              value={name}
-              label="Enter your name"
+              type="email"
+              onChange={handleEmailChange}
+              value={email}
+              label="Enter Email Address"
               fullWidth
               required
               InputLabelProps={{ shrink: true }}
               style={inputStyle}
             />
-          ) : null}
-          <TextField
-            type="email"
-            onChange={handleEmailChange}
-            value={email}
-            label="Enter Email Address"
-            fullWidth
-            required
-            InputLabelProps={{ shrink: true }}
-            style={inputStyle}
-          />
-          <TextField
-            type={showPassword ? "text" : "password"}
-            onChange={handlePasswordChange}
-            label="Enter Password"
-            fullWidth
-            required
-            InputLabelProps={{ shrink: true }}
-            style={inputStyle}
-            value={password}
-            InputProps={{
-              endAdornment: (
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                >
-                  {showPassword ? <Visibility /> : <VisibilityOff />}
-                </IconButton>
-              ),
-            }}
-          />
+            <TextField
+              type={showPassword ? "text" : "password"}
+              onChange={handlePasswordChange}
+              label="Enter Password"
+              fullWidth
+              required
+              InputLabelProps={{ shrink: true }}
+              style={inputStyle}
+              value={password}
+              InputProps={{
+                endAdornment: (
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                  >
+                    {showPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                ),
+              }}
+            />
 
-          {auth === "login" ? (
-            <Toolbar disableGutters={true}>
-              <Box style={checkStyle}>
-                <FormControlLabel
-                  control={<Checkbox name="checkedB" color="primary" />}
-                  label="Remember me"
-                  checked={isRemember}
-                  onChange={handleRememberMe}
-                />
-              </Box>
-              <Typography style={{ float: "right" }}>
-                <Link to="#" style={linkStyle}>
-                  Forgot password ?
-                </Link>
-              </Typography>
-            </Toolbar>
-          ) : null}
+            {auth === "login" ? (
+              <Toolbar disableGutters={true}>
+                <Box style={checkStyle}>
+                  <FormControlLabel
+                    control={<Checkbox name="checkedB" color="primary" />}
+                    label="Remember me"
+                    checked={isRemember}
+                    onChange={handleRememberMe}
+                  />
+                </Box>
+                <Typography style={{ float: "right" }}>
+                  <Link to="#" style={linkStyle}>
+                    Forgot password ?
+                  </Link>
+                </Typography>
+              </Toolbar>
+            ) : null}
 
-          <SubmitButton
-            color="primary"
-            label={auth === "login" ? "Sign In" : "Sign Up"}
-            type="submit"
-            isLoading={isLoading}
-            width={true}
-          />
-        </form>
-        {auth === "login" ? (
-          <Typography align="center">
-            Don't have an account?
-            <Link to="/register" style={linkStyle}>
-              {" "}
-              Sign Up Instead
-            </Link>
-          </Typography>
-        ) : (
-          <Typography align="center">
-            Have an account already ?
-            <Link to="/login" style={linkStyle}>
-              {" "}
-              Sign In Instead
-            </Link>
-          </Typography>
-        )}
-      </Paper>
+            <SubmitButton
+              color="primary"
+              label={auth === "login" ? "Sign In" : "Sign Up"}
+              type="submit"
+              isLoading={isLoading}
+              width={true}
+            />
+          </form>
+        </Paper>
+      </Grid>
+      <Grid item xs={12} sm={4}></Grid>
     </Grid>
   );
 };
