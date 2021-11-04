@@ -13,8 +13,6 @@ import SuccessAlerts from "../alerts/SuccessAlerts";
 import ErrorAlerts from "../alerts/ErrorAlerts";
 import SubmitButton from "../shared/SubmitButton";
 import { Link } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
-import { Card } from "@material-ui/core";
 
 const Login = ({
   email,
@@ -72,13 +70,19 @@ const Login = ({
     <Grid
       container
       align="center"
-      justify="center"
+      justifyContent="center"
       alignItems="center"
       direction="column"
     >
-      <Grid item xs={12} sm={3}></Grid>
-      <Grid item xs={12} sm={5} style={{ marginTop: "70px" }}>
+      <Grid item xs={12} sm={12}>
+        {iserror ? <ErrorAlerts message={alertMessage} close={close} /> : null}
+        {iserror === false ? (
+          <SuccessAlerts message={alertMessage} close={close} />
+        ) : null}
+      </Grid>
+      <Grid item xs={12} sm={12}>
         <Paper elevation={10} style={paperStyle}>
+          <h2>{auth === "register" ? "Sign Up" : "Sign In"}</h2>
           <form onSubmit={auth === "login" ? login : register}>
             {auth === "register" ? (
               <TextField
@@ -149,9 +153,26 @@ const Login = ({
               width={true}
             />
           </form>
+          {auth === "login" ? (
+            <Typography align="center">
+              Don't have an account?
+              <Link to="/register" style={linkStyle}>
+                {" "}
+                Sign Up Instead
+              </Link>
+            </Typography>
+          ) : (
+            <Typography align="center">
+              Have an account already ?
+              <Link to="/login" style={linkStyle}>
+                {" "}
+                Sign In Instead
+              </Link>
+            </Typography>
+          )}
         </Paper>
       </Grid>
-      <Grid item xs={12} sm={4}></Grid>
+      <Grid item xs={12} sm={12}></Grid>
     </Grid>
   );
 };

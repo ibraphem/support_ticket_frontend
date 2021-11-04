@@ -6,10 +6,10 @@ const CustomerDashboard = () => {
   return (
     <>
       <Grid container>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={12} md={6}>
           <UserDashboardCard label="Open Support Ticket" link="/ticket/open" />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={12} md={6}>
           <UserDashboardCard label="View Support Tickets" link="/view" />
         </Grid>
       </Grid>
