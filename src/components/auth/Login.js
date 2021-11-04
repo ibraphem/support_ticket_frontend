@@ -62,10 +62,6 @@ const Login = ({
 
   const linkStyle = { textDecoration: "none", color: "#00528b" };
 
-  const subtitleStyle = {
-    fontWeight: "bolder",
-  };
-
   return (
     <Grid
       container
