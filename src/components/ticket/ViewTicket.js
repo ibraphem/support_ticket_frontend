@@ -4,6 +4,7 @@ import { URL } from "../../components/Config";
 import { useStateValue } from "../../StateProvider";
 import TicketCard from "../shared/TicketCard";
 import Title from "../shared/Title";
+import NoResult from "../shared/NoResult";
 
 const ViewTicket = () => {
   const [tickets, setTickets] = useState([]);
@@ -17,18 +18,24 @@ const ViewTicket = () => {
   return (
     <>
       <Title heading="View Support Ticket" />
-      {tickets.map((ticket) => (
-        <TicketCard
-          key={ticket.id}
-          ticket_id={ticket.id}
-          file_id={ticket.file_id}
-          service={ticket.service}
-          department={ticket.department}
-          priority={ticket.priority}
-          date={ticket.date}
-          status={ticket.status}
-        />
-      ))}
+      {tickets.length > 0 ? (
+        <>
+          {tickets.map((ticket) => (
+            <TicketCard
+              key={ticket.id}
+              ticket_id={ticket.id}
+              file_id={ticket.file_id}
+              service={ticket.service}
+              department={ticket.department}
+              priority={ticket.priority}
+              date={ticket.date}
+              status={ticket.status}
+            />
+          ))}
+        </>
+      ) : (
+        <NoResult content="You haven't raised any ticket" />
+      )}
     </>
   );
 };

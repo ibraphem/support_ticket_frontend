@@ -82,7 +82,7 @@ const App = () => {
       const response = await axios.post(`${URL}/register`, credentials);
       if (response.data.token) {
         response.data.user.role = response.data.role;
-        console.log(response.data);
+        //   console.log(response.data);
         loginFunc(response);
         setIsLoading(false);
       } else {
@@ -112,7 +112,7 @@ const App = () => {
     try {
       const response = await axios.post(`${URL}/login`, credentials);
       if (response.data.token) {
-        console.log(response.data);
+        //     console.log(response.data);
         loginFunc(response);
         setIsLoading(false);
       } else {

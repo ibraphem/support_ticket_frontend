@@ -161,7 +161,7 @@ const TicketInfo = () => {
 
   const paperStyle = {
     padding: "0px 80px",
-    margin: "0px 80px 50px 80px",
+    margin: "0px 20px 50px 30px",
     borderRadius: "10px",
   };
   const subtitleStyle = {

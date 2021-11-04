@@ -23,8 +23,8 @@ const Title = ({ heading, ticketID, status, rerender, statusValue }) => {
   };
 
   return (
-    <Grid container style={{ padding: "10px 80px" }}>
-      <Grid item xs={8} sm={10}>
+    <Grid container style={{ padding: "10px 30px" }}>
+      <Grid item xs={12} sm={role === "Agent" && ticketID ? 8 : 12}>
         <Typography
           color="primary"
           style={{ fontWeight: "bolder", fontSize: "25px" }}
@@ -33,7 +33,7 @@ const Title = ({ heading, ticketID, status, rerender, statusValue }) => {
         </Typography>
       </Grid>
       {role === "Agent" && ticketID ? (
-        <Grid item xs={4} sm={2} style={{ float: "right" }}>
+        <Grid item xs={12} sm={4} style={{ float: "right" }}>
           <FormControlLabel
             value={statusValue}
             control={

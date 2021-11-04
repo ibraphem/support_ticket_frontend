@@ -47,8 +47,8 @@ const Login = ({
   };
 
   const paperStyle = {
-    padding: 20,
-    margin: "20px 20px",
+    padding: 15,
+    margin: "20px 10px",
     borderRadius: "10px",
   };
   const inputStyle = {

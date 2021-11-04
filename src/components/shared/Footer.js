@@ -23,7 +23,7 @@ const Footer = () => {
     position: "fixed",
     bottom: 0,
     width: "100%",
-    padding: "50px",
+    padding: "30px",
     height: "40px",
     background: "transparent",
   };
